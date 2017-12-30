@@ -1,0 +1,61 @@
+﻿@using netcore_elastic_aggregation_sample.Models
+@using netcore_elastic_aggregation_sample.Elastic.Types
+@using netcore_elastic_aggregation_sample.Extensions
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (ViewBag.MenuItems != null)
+{
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="/">Ürünler</a>
+        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                @foreach (var item in ViewBag.MenuItems as List<MenuItem>)
+                {
+                <li class="nav-item">
+                    <a class="nav-link" href="/Home/Index/@item.RouteValue">@item.Title&nbsp;
+                    <span class="badge badge-light">@item.ItemCount</span></a>
+                </li>
+                }
+            </ul>
+        </div>
+    </nav>
+</header>
+}
+@if (ViewBag.Documents != null)
+{
+<div class="container-fluid">
+    <div class="row">
+        <main role="main" class="col-sm-12 ml-sm-auto col-md-12 pt-3">
+            <h1>Ürün Listesi</h1>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Ürün Adı</th>
+                            <th>Kategori Adı</th>
+                            <th>Ücreti</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.Documents as IList<ProductType>)
+                        {
+                        <tr>
+                            <td>@item.ProductName</td>
+                            <td>@(((Category)item.CategoryId).Description())</td>
+                            <td>@item.Price ₺</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</div>
+}
